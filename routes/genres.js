@@ -1,11 +1,15 @@
 const express = require("express");
+const winston = require("winston");
+require("winston-mongodb");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const { Genre, validate } = require("../models/genre");
 
 router.get("/", async (req, res) => {
+  throw new Error("Fuck this shit");
   const genres = await Genre.find().sort("name");
+  winston.info("Genres fetched: ", genres);
   res.json(genres);
 });
 

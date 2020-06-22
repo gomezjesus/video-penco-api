@@ -14,7 +14,7 @@ module.exports = function () {
   });
 
   winston.add(new winston.transports.File({ filename: "logfile.log" }));
-  winston.add(
+  /* winston.add(
     new winston.transports.MongoDB({ db: "mongodb://localhost/video-penco" })
-  );
+  ); */
 };

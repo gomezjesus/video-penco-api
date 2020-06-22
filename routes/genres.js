@@ -1,13 +1,14 @@
 const express = require("express");
 const winston = require("winston");
+const validateObjectId = require("../middleware/validateObjectId");
 require("winston-mongodb");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const { Genre, validate } = require("../models/genre");
+const { Mongoose } = require("mongoose");
 
 router.get("/", async (req, res) => {
-  throw new Error("Fuck this shit");
   const genres = await Genre.find().sort("name");
   winston.info("Genres fetched: ", genres);
   res.json(genres);
@@ -48,7 +49,7 @@ router.delete("/:id", [auth, admin], async (req, res) => {
   res.send(genre);
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", validateObjectId, async (req, res) => {
   const genre = await Genre.findById(req.params.id);
 
   if (!genre)
